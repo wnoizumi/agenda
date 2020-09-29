@@ -54,7 +54,7 @@ public class ContatoController {
 		
 		contatoRepository.delete(contato);
 		
-		return getContatos(model);
+		return "redirect:/contatos";
 	}
 	
 	@PostMapping("/contatos/salvar")

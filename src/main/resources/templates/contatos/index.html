@@ -13,7 +13,6 @@
 	href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
 	integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz"
 	crossorigin="anonymous">
-<!-- <link rel="stylesheet" href="../css/shards.min.css"> -->
 </head>
 <body>
 	<nav class="navbar navbar-dark bg-dark">
@@ -32,7 +31,8 @@
 									<th scope="col">Nome</th>
 									<th scope="col">E-mail</th>
 									<th scope="col"><a th:href="@{/contatos/novo}"
-										class="btn btn-outline-light"><i class="fas fa-plus-circle"></i></a></th>
+										class="btn btn-outline-light"><i
+											class="fas fa-plus-circle"></i></a></th>
 								</tr>
 							</thead>
 							<tr th:each="contato : ${contatos}">
@@ -41,9 +41,36 @@
 								<td><a
 									th:href="@{/contatos/alterar/{id}(id=${contato.id})}"
 									class="btn btn-outline-dark"><i
-										class="fas fa-user-edit ml-2"></i></a> <a
-									th:href="@{/contatos/excluir/{id}(id=${contato.id})}"
-									class="btn btn-danger"><i class="fas fa-user-times ml-2"></i></a></td>
+										class="fas fa-user-edit ml-2"></i></a> <a data-toggle="modal"
+									data-target="#modal-warning"
+									th:attr="data-target='#modal-warning'+${contato.id }"
+									class="btn btn-danger"> <i class="fas fa-user-times ml-2"></i>
+								</a>
+
+									<div class="modal modal-warning fade in"
+										th:id="modal-warning+${contato.id }">
+										<div class="modal-dialog">
+											<div class="modal-content">
+												<div class="modal-header">
+													<button type="button" class="close" data-dismiss="modal"
+														aria-label="Close">
+														<span aria-hidden="true">×</span>
+													</button>
+													<h5 class="modal-title">Excluir Contato</h5>
+												</div>
+												<div class="modal-body">
+													<h3>Tem certeza de que deseja excluir esse contato?</h3>
+												</div>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-outline pull-left"
+														data-dismiss="modal">Fechar</button>
+													<a type="button" class="btn btn-outline"
+														th:href="@{/contatos/excluir/{id}(id=${contato.id})}"><i
+														class="fa fa-check"></i>&nbsp;Sim</a>
+												</div>
+											</div>
+										</div>
+									</div></td>
 							</tr>
 						</table>
 					</div>
@@ -51,5 +78,10 @@
 			</div>
 		</div>
 	</div>
+	
+
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 </body>
 </html>
