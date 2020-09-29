@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="utf-8">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<title>Novo Contato</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+	integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+	crossorigin="anonymous">
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
+	integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz"
+	crossorigin="anonymous">
+<!-- <link rel="stylesheet" href="../css/shards.min.css"> -->
+</head>
+
+<body>
+	<nav class="navbar navbar-dark bg-dark">
+		<a th:href="@{/contatos}" class="navbar-brand"><i
+			class="far fa-address-book"></i> Agenda</a>
+	</nav>
+	<div class="container my-5">
+		<h2>Editar Contato</h2>
+		<div class="card">
+			<div class="card-body">
+				<div class="col-md-15">
+					<form action="#" th:action="@{/contatos/salvar}"
+						th:object="${contato}" method="post">
+						<div class="row">
+							<div class="col-md-6">
+								<input type="submit" class="btn btn-outline-dark"
+									value="Salvar Contato">
+							</div>
+							<input type="hidden" id="id" th:field="*{id}">
+							
+							<div class="form-group col-md-10">
+								<label for="nome" class="col-form-label">Nome</label> <input
+									type="text" th:field="*{nome}" class="form-control" id="name"
+									placeholder="Nome"> <span
+									th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"
+									class="text-danger"></span>
+							</div>
+
+							<div class="form-group col-md-10">
+								<label for="sobrenome" class="col-form-label">Sobrenome</label>
+								<input type="text" th:field="*{sobrenome}" class="form-control"
+									id="sobrenome" placeholder="Sobrenome"> <span
+									th:if="${#fields.hasErrors('sobrenome')}"
+									th:errors="*{sobrenome}" class="text-danger"></span>
+							</div>
+
+							<div class="form-group col-md-10">
+								<label for="email" class="col-form-label">E-mail</label> <input
+									type="text" th:field="*{email}" class="form-control" id="email"
+									placeholder="Email"> <span
+									th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
+									class="text-danger"></span>
+							</div>
+
+							<div class="form-group col-md-10">
+								<label for="dataNascimento" class="col-form-label">Data
+									de Nascimento</label> <input type="date" th:field="*{dataNascimento}"
+									class="form-control" id="dataNascimento"
+									placeholder="DataNascimento"> <span
+									th:if="${#fields.hasErrors('dataNascimento')}"
+									th:errors="*{dataNascimento}" class="text-danger"></span>
+							</div>
+
+							<div class="form-group col-md-10"></div>
+						</div>
+
+						<div class="table-responsive">
+							<h3>Sobrenome</h3>
+							<table class="table table-hover">
+								<thead class="thead-dark">
+									<tr>
+										<th scope="col">#</th>
+										<th scope="col">Linha 1</th>
+										<th scope="col">Linha 2</th>
+										<th scope="col">Estado</th>
+										<th scope="col">Município</th>
+										<th scope="col"><button type="submit" name="addEndereco" class="btn btn-outline-light"><i class="fas fa-plus-circle"></i></button></th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:each="endereco,enderecoStat : *{enderecos}">
+										<th scope="row" th:text="${enderecoStat.count}"></td>
+										<td><input type="text"
+											th:field="*{enderecos[__${enderecoStat.index}__].enderecoLinha1}" /></td>
+										<td><input type="text"
+											th:field="*{enderecos[__${enderecoStat.index}__].enderecoLinha2}" /></td>
+										<td><input type="text"
+											th:field="*{enderecos[__${enderecoStat.index}__].estado}" /></td>
+										<td><input type="text"
+											th:field="*{enderecos[__${enderecoStat.index}__].municipio}" /></td>
+										<td>
+											<button type="submit" name="removeEndereco"
+												th:value="${enderecoStat.index}"
+												class="btn btn-danger"
+												><i class="fas fa-minus-square"></i></button>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>
