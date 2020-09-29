@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import br.ifpr.agenda.dominio.Contato;
 import br.ifpr.agenda.dominio.Endereco;
+import br.ifpr.agenda.dominio.Telefone;
 import br.ifpr.agenda.repositories.ContatoRepository;
 
 @Controller
@@ -62,7 +63,7 @@ public class ContatoController {
 			return "contatos/editar";
 		}
 		
-		contato.corrigirEnderecos();
+		contato.corrigirEnderecosTelefones();
 		
 		contatoRepository.save(contato);
 		
@@ -80,6 +81,12 @@ public class ContatoController {
 		final Integer enderecoIndex = Integer.valueOf(req.getParameter("removeEndereco"));
 		
 		contato.removeEndereco(enderecoIndex.intValue());
+		return "contatos/editar";
+	}
+	
+	@RequestMapping(value="/contatos/salvar", params = {"addTelefone"})
+	public String addTelefone(Contato contato, BindingResult bindingResult) {
+		contato.addTelefone(new Telefone());
 		return "contatos/editar";
 	}
 }

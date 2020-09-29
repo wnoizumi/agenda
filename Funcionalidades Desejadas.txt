@@ -1,0 +1,16 @@
+Requisitos Funcionais
+
+Gerenciar contatos
+Adicionar marcadores à contatos
+Gerenciar múltiplos endereços por contato
+Gerenciar múltiplos telefones por contato
+Permitir ordenar lista de contatos por diferentes colunas
+Permitir busca textual por contatos (i.e., busca por termos que aparecem em qualquer campo, aceitando imprecisões)
+Autocomplete ao preencher cidade e estado
+
+Requisitos não funcionais
+
+Autenticação e segurança
+Multi tenancy (cada usuário tem uma lista separada de contatos)
+Testes automatizados
+Uso de cache

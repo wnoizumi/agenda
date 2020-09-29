@@ -35,7 +35,7 @@
 									value="Salvar Contato">
 							</div>
 							<input type="hidden" id="id" th:field="*{id}">
-							
+
 							<div class="form-group col-md-10">
 								<label for="nome" class="col-form-label">Nome</label> <input
 									type="text" th:field="*{nome}" class="form-control" id="name"
@@ -73,7 +73,47 @@
 						</div>
 
 						<div class="table-responsive">
-							<h3>Sobrenome</h3>
+							<h3>Telefones</h3>
+							<table class="table table-hover">
+								<thead class="thead-dark">
+									<tr>
+										<th scope="col">#</th>
+										<th scope="col">Número</th>
+										<th scope="col">Tipo</th>
+										<th scope="col"><button type="submit" name="addTelefone"
+												class="btn btn-outline-light">
+												<i class="fas fa-plus-circle"></i>
+											</button></th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:each="telefone,telefoneStat : *{telefones}">
+										<th scope="row" th:text="${telefoneStat.count}"><input
+											type="hidden"
+											th:field="*{telefones[__${telefoneStat.index}__].id}" /></th>
+										<td><input type="text"
+											th:field="*{telefones[__${telefoneStat.index}__].numero}" />
+										</td>
+										<td><select
+											th:field="*{telefones[__${telefoneStat.index}__].tipo}">
+												<option
+													th:each="tipoOpc : ${T(br.ifpr.agenda.dominio.TipoTelefone).values()}"
+													th:value="${tipoOpc}" th:text="${tipoOpc.tipoStr}">
+												</option>
+										</select></td>
+										<td>
+											<button type="submit" name="removeTelefone"
+												th:value="${telefoneStat.index}" class="btn btn-danger">
+												<i class="fas fa-minus-square"></i>
+											</button>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+
+						<div class="table-responsive">
+							<h3>Endereços</h3>
 							<table class="table table-hover">
 								<thead class="thead-dark">
 									<tr>
@@ -82,12 +122,18 @@
 										<th scope="col">Linha 2</th>
 										<th scope="col">Estado</th>
 										<th scope="col">Município</th>
-										<th scope="col"><button type="submit" name="addEndereco" class="btn btn-outline-light"><i class="fas fa-plus-circle"></i></button></th>
+										<th scope="col"><button type="submit" name="addEndereco"
+												class="btn btn-outline-light">
+												<i class="fas fa-plus-circle"></i>
+											</button></th>
 									</tr>
 								</thead>
 								<tbody>
 									<tr th:each="endereco,enderecoStat : *{enderecos}">
-										<th scope="row" th:text="${enderecoStat.count}"></td>
+										<th scope="row" th:text="${enderecoStat.count}"><input
+											type="hidden"
+											th:field="*{enderecos[__${enderecoStat.index}__].id}">
+										</th>
 										<td><input type="text"
 											th:field="*{enderecos[__${enderecoStat.index}__].enderecoLinha1}" /></td>
 										<td><input type="text"
@@ -98,9 +144,9 @@
 											th:field="*{enderecos[__${enderecoStat.index}__].municipio}" /></td>
 										<td>
 											<button type="submit" name="removeEndereco"
-												th:value="${enderecoStat.index}"
-												class="btn btn-danger"
-												><i class="fas fa-minus-square"></i></button>
+												th:value="${enderecoStat.index}" class="btn btn-danger">
+												<i class="fas fa-minus-square"></i>
+											</button>
 										</td>
 									</tr>
 								</tbody>

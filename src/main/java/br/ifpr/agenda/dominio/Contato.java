@@ -36,6 +36,14 @@ public class Contato {
 		mappedBy = "contato"
 	)
 	private List<Endereco> enderecos = new ArrayList<>();
+	
+	@OneToMany
+	(
+		cascade = CascadeType.ALL, 
+		orphanRemoval = true,
+		mappedBy = "contato"
+	)
+	private List<Telefone> telefones = new ArrayList<>();
 
 	@Deprecated
 	protected Contato() {}
@@ -105,6 +113,29 @@ public class Contato {
 	public List<Endereco> getEnderecos() {
 		return this.enderecos;
 	}
+	
+
+	public void addTelefone(Telefone telefone) {
+		this.telefones.add(telefone);
+		telefone.setContato(this);
+	}
+	
+	public void removeTelefone(Telefone telefone) {
+		this.telefones.remove(telefone);
+		telefone.setContato(null);
+	}
+	
+	public void removeTelefone(int index) {
+		Telefone telefone = this.telefones.get(index);
+		if (telefone != null) {
+			this.telefones.remove(index);
+			telefone.setContato(null);
+		}
+	}
+	
+	public List<Telefone> getTelefones() {
+		return this.telefones;
+	}
 
 	@Override
 	public String toString() {
@@ -128,20 +159,28 @@ public class Contato {
 		return Objects.equals(id, other.id);
 	}
 
-	public void limparEnderecosVazios() {
-		List<Endereco> vazios = this.enderecos
-									.stream()
-									.filter(e -> e.isVazio())
-									.collect(Collectors.toList());
-		for (Endereco endereco : vazios) {
-			removeEndereco(endereco);
+	public void corrigirEnderecosTelefones() {
+		limparEnderecosTelefonesVazios();
+		
+		for (Endereco endereco : this.enderecos) {
+			endereco.setContato(this);
+		}
+		
+		for (Telefone telefone : telefones) {
+			telefone.setContato(this);
 		}
 	}
 
-	public void corrigirEnderecos() {
-		limparEnderecosVazios();
-		for (Endereco endereco : this.enderecos) {
-			endereco.setContato(this);
+	private void limparEnderecosTelefonesVazios() {
+		List<Endereco> enderecosVazios = enderecos.stream().filter(e -> e.isVazio()).collect(Collectors.toList());
+		List<Telefone> telefonesVazios = telefones.stream().filter(t -> t.isVazio()).collect(Collectors.toList());
+		
+		for (Telefone telefone : telefonesVazios) {
+			removeTelefone(telefone);
+		}
+		
+		for (Endereco endereco : enderecosVazios) {
+			removeEndereco(endereco);
 		}
 	}
 }

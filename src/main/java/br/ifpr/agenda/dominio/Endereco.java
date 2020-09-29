@@ -3,11 +3,12 @@ package br.ifpr.agenda.dominio;
 import java.util.Objects;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+
+import org.springframework.util.StringUtils;
 
 @Entity
 public class Endereco {
@@ -82,7 +83,7 @@ public class Endereco {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id);
+		return Objects.hash(enderecoLinha1, enderecoLinha2, estado, id, municipio);
 	}
 
 	@Override
@@ -94,21 +95,18 @@ public class Endereco {
 		if (getClass() != obj.getClass())
 			return false;
 		Endereco other = (Endereco) obj;
-		return Objects.equals(id, other.id);
+		return Objects.equals(enderecoLinha1, other.enderecoLinha1)
+				&& Objects.equals(enderecoLinha2, other.enderecoLinha2) && Objects.equals(estado, other.estado)
+				&& Objects.equals(id, other.id) && Objects.equals(municipio, other.municipio);
 	}
 
 	public boolean isVazio() {
-		return vazioOuNulo(enderecoLinha1)
+		return !StringUtils.hasText(enderecoLinha1)
 				&&
-				vazioOuNulo(enderecoLinha2)
+				!StringUtils.hasText(enderecoLinha2)
 				&&
-				vazioOuNulo(estado)
+				!StringUtils.hasText(estado)
 				&&
-				vazioOuNulo(municipio);
+				!StringUtils.hasText(municipio);
 	}
-	
-	private static boolean vazioOuNulo(String campo) {
-		return campo == null || campo.isBlank();
-	}
-	
 }
