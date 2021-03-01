@@ -34,7 +34,9 @@ public class ContatoController {
 	}
 	
 	@GetMapping("/contatos/novo")
-	public String novoContato(Contato contato) {
+	public String novoContato(Model model) {
+		model.addAttribute("contato", new Contato(""));
+		model.addAttribute("fieldToFocus", "nome");
 		return "contatos/editar";
 	}
 	
@@ -44,10 +46,11 @@ public class ContatoController {
 											.orElseThrow(() -> new IllegalArgumentException("Contato inválido"));
 		
 		model.addAttribute("contato", contato);
+		model.addAttribute("fieldToFocus", "nome");
 		return "contatos/editar";
 	}
 	
-	@GetMapping("/contatos/excluir/{id}")
+	@PostMapping("/contatos/excluir/{id}")
 	public String excluirContato(@PathVariable("id") long id, Model model) {
 		Contato contato = contatoRepository.findById(id)
 											.orElseThrow(() -> new IllegalArgumentException("Contato inválido"));
@@ -71,8 +74,10 @@ public class ContatoController {
 	}
 	
 	@RequestMapping(value="/contatos/salvar", params = {"addEndereco"})
-	public String addEndereco(Contato contato, BindingResult bindingResult) {
+	public String addEndereco(Contato contato, BindingResult bindingResult, Model model) {
 		contato.addEndereco(new Endereco());
+		String fieldId = "enderecos" + (contato.getEnderecos().size() - 1) + ".enderecoLinha1";
+		model.addAttribute("fieldToFocus", fieldId);
 		return "contatos/editar";
 	}
 	
@@ -85,8 +90,20 @@ public class ContatoController {
 	}
 	
 	@RequestMapping(value="/contatos/salvar", params = {"addTelefone"})
-	public String addTelefone(Contato contato, BindingResult bindingResult) {
+	public String addTelefone(Contato contato, BindingResult bindingResult, Model model) {
 		contato.addTelefone(new Telefone());
+		
+		String fieldId = "telefones" + (contato.getTelefones().size() - 1) + ".numero";
+		model.addAttribute("fieldToFocus", fieldId);
+		
+		return "contatos/editar";
+	}
+	
+	@RequestMapping(value="/contatos/salvar", params = {"removeTelefone"})
+	public String removeTelefone(Contato contato, BindingResult bindingResult, HttpServletRequest req) {
+		final Integer telefoneIndex = Integer.valueOf(req.getParameter("removeTelefone"));
+		
+		contato.removeTelefone(telefoneIndex.intValue());
 		return "contatos/editar";
 	}
 }

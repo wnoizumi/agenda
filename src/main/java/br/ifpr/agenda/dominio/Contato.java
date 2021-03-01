@@ -13,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -43,6 +44,7 @@ public class Contato {
 		orphanRemoval = true,
 		mappedBy = "contato"
 	)
+	@Size(min = 1, message = "Telefone obrigatório")
 	private List<Telefone> telefones = new ArrayList<>();
 
 	@Deprecated
@@ -64,7 +66,7 @@ public class Contato {
 		return nome;
 	}
 
-	public void setNome(String nome) {
+	public void setNome(final String nome) {
 		this.nome = nome;
 	}
 

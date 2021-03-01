@@ -64,9 +64,10 @@
 												<div class="modal-footer">
 													<button type="button" class="btn btn-outline pull-left"
 														data-dismiss="modal">Fechar</button>
-													<a type="button" class="btn btn-outline"
-														th:href="@{/contatos/excluir/{id}(id=${contato.id})}"><i
-														class="fa fa-check"></i>&nbsp;Sim</a>
+														
+													<form action="#" th:action="@{/contatos/excluir/{id}(id=${contato.id})}" method="post">	
+														<input type="submit" class="btn btn-outline" value="Sim">
+													</form>
 												</div>
 											</div>
 										</div>

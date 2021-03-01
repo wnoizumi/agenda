@@ -1,9 +1,9 @@
 Requisitos Funcionais
 
-Gerenciar contatos
+Gerenciar contatos - ok
 Adicionar marcadores à contatos
-Gerenciar múltiplos endereços por contato
-Gerenciar múltiplos telefones por contato
+Gerenciar múltiplos endereços por contato - ok
+Gerenciar múltiplos telefones por contato - ok
 Permitir ordenar lista de contatos por diferentes colunas
 Permitir busca textual por contatos (i.e., busca por termos que aparecem em qualquer campo, aceitando imprecisões)
 Autocomplete ao preencher cidade e estado
