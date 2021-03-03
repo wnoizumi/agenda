@@ -42,7 +42,7 @@ public class ContatoController {
 	
 	@GetMapping("/contatos/alterar/{id}")
 	public String alterContato(@PathVariable("id") long id, Model model) {
-		Contato contato = contatoRepository.findById(id)
+		Contato contato = contatoRepository.findCompletoById(id)
 											.orElseThrow(() -> new IllegalArgumentException("Contato inválido"));
 		
 		model.addAttribute("contato", contato);
