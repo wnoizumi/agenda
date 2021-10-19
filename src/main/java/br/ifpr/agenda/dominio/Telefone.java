@@ -1,5 +1,6 @@
 package br.ifpr.agenda.dominio;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 import javax.persistence.Column;
@@ -15,7 +16,9 @@ import javax.validation.constraints.NotBlank;
 import org.springframework.util.StringUtils;
 
 @Entity
-public class Telefone {
+public class Telefone implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

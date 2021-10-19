@@ -1,5 +1,6 @@
 package br.ifpr.agenda.dominio;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,15 +23,19 @@ import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
-public class Contato {
+public class Contato implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
+
 	@NotBlank(message = "Nome obrigatório")
 	private String nome;
+
 	private String sobrenome;
+
 	private String email;
+
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private LocalDate dataNascimento;
 	
