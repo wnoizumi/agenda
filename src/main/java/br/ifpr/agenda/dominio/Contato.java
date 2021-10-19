@@ -26,7 +26,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class Contato implements Serializable {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	@NotBlank(message = "Nome obrigatório")
