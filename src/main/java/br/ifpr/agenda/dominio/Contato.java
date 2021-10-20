@@ -4,24 +4,27 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.OrderColumn;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode
 @Entity
 public class Contato implements Serializable {
 	
@@ -55,52 +58,9 @@ public class Contato implements Serializable {
 	)
 	@Size(min = 1, message = "Telefone obrigatório")
 	private List<Telefone> telefones = new ArrayList<>();
-
-	@Deprecated
-	protected Contato() {}
 	
 	public Contato(final String nome) {
 		this.nome = nome;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(final String nome) {
-		this.nome = nome;
-	}
-
-	public String getSobrenome() {
-		return sobrenome;
-	}
-
-	public void setSobrenome(String sobrenome) {
-		this.sobrenome = sobrenome;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public LocalDate getDataNascimento() {
-		return dataNascimento;
-	}
-
-	public void setDataNascimento(LocalDate dataNascimento) {
-		this.dataNascimento = dataNascimento;
 	}
 
 	public void addEndereco(Endereco endereco) {
@@ -120,11 +80,6 @@ public class Contato implements Serializable {
 			endereco.setContato(null);
 		}
 	}
-	
-	public List<Endereco> getEnderecos() {
-		return this.enderecos;
-	}
-	
 
 	public void addTelefone(Telefone telefone) {
 		this.telefones.add(telefone);
@@ -143,31 +98,10 @@ public class Contato implements Serializable {
 			telefone.setContato(null);
 		}
 	}
-	
-	public List<Telefone> getTelefones() {
-		return this.telefones;
-	}
 
 	@Override
 	public String toString() {
 		return "Contato [nome=" + nome + "]";
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(id);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Contato other = (Contato) obj;
-		return Objects.equals(id, other.id);
 	}
 
 	public void corrigirEnderecosTelefones() {
