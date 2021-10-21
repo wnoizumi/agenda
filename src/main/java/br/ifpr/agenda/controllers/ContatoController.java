@@ -1,8 +1,12 @@
 package br.ifpr.agenda.controllers;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,13 +18,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import br.ifpr.agenda.dominio.Contato;
 import br.ifpr.agenda.dominio.Endereco;
 import br.ifpr.agenda.dominio.Telefone;
+import br.ifpr.agenda.dominio.TipoTelefone;
 import br.ifpr.agenda.repositories.ContatoRepository;
+import br.ifpr.agenda.repositories.TipoTelefoneRepository;
 
 @Controller
 public class ContatoController {
 
 	private ContatoRepository contatoRepository;
-	
+	@Autowired
+	private TipoTelefoneRepository tipoTelefoneRepository;
+
 	public ContatoController(ContatoRepository contatoRepository) {
 		this.contatoRepository = contatoRepository;
 	}
@@ -36,6 +44,7 @@ public class ContatoController {
 	@GetMapping("/contatos/novo")
 	public String novoContato(Model model) {
 		model.addAttribute("contato", new Contato(""));
+		model.addAttribute("tiposTelefone", tipoTelefoneRepository.findAll());
 		model.addAttribute("fieldToFocus", "nome");
 		return "contatos/editar";
 	}
@@ -46,6 +55,7 @@ public class ContatoController {
 											.orElseThrow(() -> new IllegalArgumentException("Contato inválido"));
 		
 		model.addAttribute("contato", contato);
+		model.addAttribute("tiposTelefone", tipoTelefoneRepository.findAll());
 		model.addAttribute("fieldToFocus", "nome");
 		return "contatos/editar";
 	}
@@ -77,6 +87,7 @@ public class ContatoController {
 	public String addEndereco(Contato contato, BindingResult bindingResult, Model model) {
 		contato.addEndereco(new Endereco());
 		String fieldId = "enderecos" + (contato.getEnderecos().size() - 1) + ".enderecoLinha1";
+		model.addAttribute("tiposTelefone", tipoTelefoneRepository.findAll());
 		model.addAttribute("fieldToFocus", fieldId);
 		return "contatos/editar";
 	}
@@ -94,6 +105,7 @@ public class ContatoController {
 		contato.addTelefone(new Telefone());
 		
 		String fieldId = "telefones" + (contato.getTelefones().size() - 1) + ".numero";
+		model.addAttribute("tiposTelefone", tipoTelefoneRepository.findAll());
 		model.addAttribute("fieldToFocus", fieldId);
 		
 		return "contatos/editar";
