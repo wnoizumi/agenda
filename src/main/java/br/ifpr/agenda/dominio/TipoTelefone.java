@@ -9,21 +9,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-// public enum TipoTelefone {
-
-// 	CELULAR("Celular"), CASA("Casa"), TRABALHO("Trabalho");
-	
-// 	private String tipoStr;
-	
-// 	private TipoTelefone(String tipoStr) {
-// 		this.tipoStr = tipoStr;
-// 	}
-	
-// 	public String getTipoStr() {
-// 		return this.tipoStr;
-// 	}
-// }
-
 @Entity
 @Table(name = "tipo_telefone")
 public class TipoTelefone {

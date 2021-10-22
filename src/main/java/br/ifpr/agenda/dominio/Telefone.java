@@ -2,19 +2,11 @@ package br.ifpr.agenda.dominio;
 
 import java.util.Objects;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.validation.constraints.NotBlank;
 
 import org.springframework.util.StringUtils;
 
@@ -25,8 +17,6 @@ public class Telefone {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
-	// @JoinTable(name = "tipo_telefone")
-	// @JoinColumn(name = "tipo_telefone_id")
 	@ManyToOne
 	private TipoTelefone tipo;
 	
