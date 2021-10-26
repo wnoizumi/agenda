@@ -1,8 +1,5 @@
 package br.ifpr.agenda.controllers;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
@@ -18,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import br.ifpr.agenda.dominio.Contato;
 import br.ifpr.agenda.dominio.Endereco;
 import br.ifpr.agenda.dominio.Telefone;
-import br.ifpr.agenda.dominio.TipoTelefone;
 import br.ifpr.agenda.repositories.ContatoRepository;
 import br.ifpr.agenda.repositories.TipoTelefoneRepository;
 
