@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<html lang="en" xmlns:th="https://www.thymeleaf.org".
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <meta charset="utf-8">
 <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -15,6 +16,8 @@
 	crossorigin="anonymous">
 </head>
 <body>
+<header th:insert="fragments/geral.html :: header"> </header>
+
 	<nav class="navbar navbar-dark bg-dark">
 		<a th:href="@{/contatos}" class="navbar-brand"><i
 			class="far fa-address-book"></i> Agenda</a>
