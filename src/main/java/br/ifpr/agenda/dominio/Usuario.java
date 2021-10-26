@@ -26,19 +26,21 @@ public class Usuario implements Serializable {
 
     private String name;
 
-    private String email;
+    private String useremail;
 
     private String password;
 
+    private String role;
+
     @Override
     public String toString() {
-        return "Usuario [nome=" + name + ", email=" + email + ", password="
+        return "Usuario [nome=" + name + ", email=" + useremail + ", password="
                 + password + "]";
     }
     public boolean isVazio() {
         return !StringUtils.hasText(name)
                 &&
-                !StringUtils.hasText(email)
+                !StringUtils.hasText(useremail)
                 &&
                 !StringUtils.hasText(password);
     }

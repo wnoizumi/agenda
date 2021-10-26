@@ -25,9 +25,18 @@ public class AutenticacaoController {
 		return "autenticacao/login";
 	}
 
+//	@PostMapping("/login")
+//	public String postLogin(@Valid Login login, BindingResult bindingResult, Model model) {
+//		if(usuarioRepository.findByEmailAddressAAndPassword(login.getEmail(), login.getSenha()) != 1) {
+//			return "autenticacao/login";
+//		}
+//
+//		return "redirect:/contatos";
+//	}
+
 	@PostMapping("/login")
 	public String postLogin(@Valid Login login, BindingResult bindingResult, Model model) {
-		if(usuarioRepository.findByEmailAddressAAndPassword(login.getEmail(), login.getSenha()) != 1) {
+		if(!usuarioRepository.findByUseremail(login.getEmail()).isVazio()){
 			return "autenticacao/login";
 		}
 
