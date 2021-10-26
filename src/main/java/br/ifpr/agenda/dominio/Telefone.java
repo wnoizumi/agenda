@@ -9,7 +9,11 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.NotBlank;
 
 import org.springframework.util.StringUtils;
@@ -21,8 +25,9 @@ public class Telefone {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
-	@Enumerated(EnumType.ORDINAL)
-	@Column(nullable = false)
+	// @JoinTable(name = "tipo_telefone")
+	// @JoinColumn(name = "tipo_telefone_id")
+	@ManyToOne
 	private TipoTelefone tipo;
 	
 	private String numero;

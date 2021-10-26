@@ -106,13 +106,17 @@
 										<td><input type="text"
 											th:field="*{telefones[__${telefoneStat.index}__].numero}" />
 										</td>
-										<td><select
-											th:field="*{telefones[__${telefoneStat.index}__].tipo}">
-												<option
-													th:each="tipoOpc : ${T(br.ifpr.agenda.dominio.TipoTelefone).values()}"
-													th:value="${tipoOpc}" th:text="${tipoOpc.tipoStr}">
+										<td>
+											<select form="editarForm" 
+												id="tipo-id" 
+												name="tipo-id" 
+												th:field="*{telefones[__${telefoneStat.index}__].tipo}">
+												<option th:each="tipoTelefone : ${tiposTelefone}" 
+													th:value="${tipoTelefone.id}" 
+													th:text="${tipoTelefone.nome}">
 												</option>
-										</select></td>
+											</select>
+										</td>
 										<td>
 											<button type="submit" name="removeTelefone"
 												th:value="${telefoneStat.index}" class="btn btn-danger">
