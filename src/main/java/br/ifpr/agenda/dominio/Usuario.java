@@ -26,7 +26,7 @@ public class Usuario implements Serializable {
 
     private String name;
 
-    private String useremail;
+    private String username;
 
     private String password;
 
@@ -34,13 +34,13 @@ public class Usuario implements Serializable {
 
     @Override
     public String toString() {
-        return "Usuario [nome=" + name + ", email=" + useremail + ", password="
+        return "Usuario [nome=" + name + ", email=" + username + ", password="
                 + password + "]";
     }
     public boolean isVazio() {
         return !StringUtils.hasText(name)
                 &&
-                !StringUtils.hasText(useremail)
+                !StringUtils.hasText(username)
                 &&
                 !StringUtils.hasText(password);
     }

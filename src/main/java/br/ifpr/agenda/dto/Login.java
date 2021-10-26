@@ -18,8 +18,8 @@ public class Login {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    private String email;
-    private String senha;
+    private String username;
+    private String password;
     private String role;
 
     @Override

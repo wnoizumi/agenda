@@ -25,7 +25,7 @@ public class ContatoController {
 		this.contatoRepository = contatoRepository;
 	}
 	
-	@RequestMapping("/contatos")
+	@RequestMapping("/")
 	public String getContatos(Model model) {
 		
 		model.addAttribute("contatos", contatoRepository.findAll());
@@ -57,7 +57,7 @@ public class ContatoController {
 		
 		contatoRepository.delete(contato);
 		
-		return "redirect:/contatos";
+		return "redirect:/";
 	}
 	
 	@PostMapping("/contatos/salvar")
@@ -70,7 +70,7 @@ public class ContatoController {
 		
 		contatoRepository.save(contato);
 		
-		return "redirect:/contatos";
+		return "redirect:/";
 	}
 	
 	@RequestMapping(value="/contatos/salvar", params = {"addEndereco"})

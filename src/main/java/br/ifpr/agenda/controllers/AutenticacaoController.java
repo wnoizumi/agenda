@@ -1,8 +1,11 @@
 package br.ifpr.agenda.controllers;
 
+import br.ifpr.agenda.dominio.Role;
 import br.ifpr.agenda.dominio.Usuario;
 import br.ifpr.agenda.dto.Login;
 import br.ifpr.agenda.repositories.UsuarioRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,7 +17,11 @@ import javax.validation.Valid;
 @Controller
 public class AutenticacaoController {
 
+	@Autowired
 	private UsuarioRepository usuarioRepository;
+
+	@Autowired
+	private PasswordEncoder encoder;
 
 	public AutenticacaoController(UsuarioRepository usuarioRepository) {
 		this.usuarioRepository = usuarioRepository;
@@ -25,22 +32,13 @@ public class AutenticacaoController {
 		return "autenticacao/login";
 	}
 
-//	@PostMapping("/login")
-//	public String postLogin(@Valid Login login, BindingResult bindingResult, Model model) {
-//		if(usuarioRepository.findByEmailAddressAAndPassword(login.getEmail(), login.getSenha()) != 1) {
-//			return "autenticacao/login";
-//		}
-//
-//		return "redirect:/contatos";
-//	}
-
 	@PostMapping("/login")
 	public String postLogin(@Valid Login login, BindingResult bindingResult, Model model) {
-		if(!usuarioRepository.findByUseremail(login.getEmail()).isVazio()){
+		if(!usuarioRepository.findByUsername(login.getUsername()).isVazio()){
 			return "autenticacao/login";
 		}
 
-		return "redirect:/contatos";
+		return "redirect:/";
 	}
 
 	@RequestMapping("/cadastro-usuario")
@@ -53,8 +51,10 @@ public class AutenticacaoController {
 		if (bindingResult.hasErrors()) {
 			return "autenticacao/cadastro";
 		}
+		usuario.setRole(Role.USER.getNome());
+		usuario.setPassword(encoder.encode(usuario.getPassword()));
 		usuarioRepository.save(usuario);
 
-		return "redirect:/contatos";
+		return "redirect:/login";
 	}
 }

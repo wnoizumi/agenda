@@ -25,7 +25,7 @@ import org.springframework.stereotype.Component;
 
 
             Usuario usuarioAdm = new Usuario();
-            usuarioAdm.setUseremail("admin");
+            usuarioAdm.setUsername("admin");
             usuarioAdm.setName("admin");
             usuarioAdm.setPassword(encoder.encode("admin"));
             usuarioAdm.setRole(Role.ADMIN.getNome());

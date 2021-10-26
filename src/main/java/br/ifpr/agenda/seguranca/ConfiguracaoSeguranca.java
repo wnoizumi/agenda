@@ -29,9 +29,15 @@ public class ConfiguracaoSeguranca extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().anyRequest().authenticated()
-                .and().formLogin().permitAll()
-                .and().logout().permitAll();
+        http
+                .authorizeRequests()
+                .antMatchers("/cadastro-usuario").permitAll()
+                .antMatchers("/usuario/salvar").permitAll()
+                .anyRequest().authenticated()
+                .and()
+                .formLogin()
+                .loginPage("/login")
+                .permitAll();
     }
 
     @Autowired
@@ -43,5 +49,4 @@ public class ConfiguracaoSeguranca extends WebSecurityConfigurerAdapter {
     public PasswordEncoder getPasswordEncoder(){
         return new BCryptPasswordEncoder(12);
     }
-
 }
