@@ -71,12 +71,12 @@
 							</div>
 
 							<div class="form-group col-md-12">
-								<label for="dataNascimento" class="col-form-label">Data
-									de Nascimento</label> <input type="date" th:field="*{dataNascimento}"
+								<label for="dataNascimento" class="col-form-label">Data de Nascimento</label>
+								<input type="date" data-mask="00/00/0000" maxlength="10" th:field="*{dataNascimento}"
 									class="form-control" id="dataNascimento"
 									placeholder="DataNascimento"> <span
 									th:if="${#fields.hasErrors('dataNascimento')}"
-									th:errors="*{dataNascimento}" class="text-danger"></span>
+									th:errors="*{dataNascimento}" class="text-danger" ></span>
 							</div>
 
 							<div class="form-group col-md-10"></div>
