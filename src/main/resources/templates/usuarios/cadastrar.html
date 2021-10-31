@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="x-ua-compatible" content="ie=edge">
-<title>Novo Contato</title>
+<title>Novo Usuário</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
@@ -61,7 +61,7 @@
 
 							<div class="form-group col-md-12">
 								<label for="senha" class="col-form-label">Senha</label> <input
-									type="text" th:field="*{senha}" class="form-control" id="senha"
+									type="password" th:field="*{senha}" class="form-control" id="senha"
 									placeholder="Senha"> <span
 									th:if="${#fields.hasErrors('senha')}" th:errors="*{senha}"
 									class="text-danger"></span>

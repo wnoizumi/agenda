@@ -18,7 +18,7 @@ public class UsuarioController {
 	private UsuarioRepository repository;
 
 	@GetMapping("/usuarios/cadastrar")
-	public String novoContato(Model model) {
+	public String novoUsuario(Model model) {
 		model.addAttribute("usuario", new Usuario());
 		return "usuarios/cadastrar";
 	}
