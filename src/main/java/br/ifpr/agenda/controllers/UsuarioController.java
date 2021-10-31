@@ -1,5 +1,7 @@
 package br.ifpr.agenda.controllers;
 
+import java.security.Principal;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,5 +33,14 @@ public class UsuarioController {
 		repository.save(usuario);
 
 		return "redirect:/login";
+	}
+
+	@GetMapping("/login")
+	public String login(Principal principal) {
+		if (principal != null) {
+			return "redirect:/contatos";
+		}
+
+		return "/login";
 	}
 }

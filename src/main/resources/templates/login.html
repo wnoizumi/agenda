@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Entrar no Sistema</title>
+
+  <style type="text/css">
+    .container-login {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100vw;
+      height: 100vh;
+    }
+
+    .user-login {
+      padding: 10px 10px;
+      height: auto;
+      width: 400px;
+      border: 0;
+      border-radius: 15px;
+      text-align: center;
+      box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    }
+
+    .alert-danger {
+      font-size: 20px;
+      color: red;
+    }
+
+    input {
+      width: 80%;
+      height: 20px;
+      margin: 10px 0px;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+
+<body class="container-login">
+  <form method="POST" th:action="@{/login}">
+    <div class="user-login">
+      <h1>Agenda</h1>
+      <h2>Entrar no Sistema</h2>
+      
+      <div th:if="${param.error}">
+        <div class="alert-danger">Usuário ou senha inválidos.</div>
+      </div>
+
+      <div>
+        <input name="username" 
+          placeholder="E-mail"
+          type="text" 
+          class="form-control" 
+          autofocus="autofocus"
+          required="true" />
+      </div>
+  
+      <div>
+        <input name="password" 
+          type="password" 
+          placeholder="Senha" 
+          class="form-control" 
+          required="true" />
+      </div>
+  
+      <button type="submit"
+        class="btn btn-lg btn-primary btn-block">
+        Entrar
+      </button>
+    </div>
+  </form>
+</body>
+
+</html>
