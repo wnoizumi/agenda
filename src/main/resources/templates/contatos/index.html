@@ -16,8 +16,13 @@
 </head>
 <body>
 	<nav class="navbar navbar-dark bg-dark">
-		<a th:href="@{/contatos}" class="navbar-brand"><i
-			class="far fa-address-book"></i> Agenda</a>
+		<a th:href="@{/contatos}" class="navbar-brand">
+			<i class="far fa-address-book"></i> Agenda
+		</a>
+
+		<a th:href="@{/logout}" class="navbar-brand">
+			<i class="fas fa-sign-out-alt"></i>
+		</a>
 	</nav>
 	<div class="container my-5">
 		<div class="card">
