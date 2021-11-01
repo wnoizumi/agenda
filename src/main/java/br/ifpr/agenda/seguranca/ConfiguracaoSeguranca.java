@@ -23,6 +23,8 @@ public class ConfiguracaoSeguranca extends WebSecurityConfigurerAdapter{
     protected void configure(HttpSecurity http) throws Exception {
         http
             .authorizeRequests()
+                .antMatchers("/usuarios/cadastrar").permitAll()
+                .antMatchers("/usuarios/salvar").permitAll()
                 .anyRequest().authenticated()
                 .and()
             .formLogin()
