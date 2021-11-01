@@ -77,7 +77,7 @@ public class ContatoController {
 		}
 
 		Usuario usuarioLogado = this.usuarioService.getUsuarioLogado();
-		
+
 		contato.corrigirEnderecosTelefones();
 		contato.setUsuario(usuarioLogado);
 		contatoRepository.save(contato);
@@ -95,10 +95,11 @@ public class ContatoController {
 	}
 	
 	@RequestMapping(value="/contatos/salvar", params = {"removeEndereco"})
-	public String removeEndereco(Contato contato, BindingResult bindingResult, HttpServletRequest req) {
+	public String removeEndereco(Contato contato, BindingResult bindingResult, HttpServletRequest req, Model model) {
 		final Integer enderecoIndex = Integer.valueOf(req.getParameter("removeEndereco"));
 		
 		contato.removeEndereco(enderecoIndex.intValue());
+		model.addAttribute("tiposTelefone", tipoTelefoneRepository.findAll());
 		return "contatos/editar";
 	}
 	
@@ -114,10 +115,11 @@ public class ContatoController {
 	}
 	
 	@RequestMapping(value="/contatos/salvar", params = {"removeTelefone"})
-	public String removeTelefone(Contato contato, BindingResult bindingResult, HttpServletRequest req) {
+	public String removeTelefone(Contato contato, BindingResult bindingResult, HttpServletRequest req, Model model) {
 		final Integer telefoneIndex = Integer.valueOf(req.getParameter("removeTelefone"));
 		
 		contato.removeTelefone(telefoneIndex.intValue());
+		model.addAttribute("tiposTelefone", tipoTelefoneRepository.findAll());
 		return "contatos/editar";
 	}
 }

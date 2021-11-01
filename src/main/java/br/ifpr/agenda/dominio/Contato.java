@@ -106,14 +106,13 @@ public class Contato {
 	
 	public void removeEndereco(Endereco endereco) {
 		this.enderecos.remove(endereco);
-		endereco.setContato(null);
 	}
 	
 	public void removeEndereco(int index) {
 		Endereco endereco = this.enderecos.get(index);
+
 		if (endereco != null) {
 			this.enderecos.remove(index);
-			endereco.setContato(null);
 		}
 	}
 	
@@ -129,14 +128,13 @@ public class Contato {
 	
 	public void removeTelefone(Telefone telefone) {
 		this.telefones.remove(telefone);
-		telefone.setContato(null);
 	}
 	
 	public void removeTelefone(int index) {
 		Telefone telefone = this.telefones.get(index);
+
 		if (telefone != null) {
 			this.telefones.remove(index);
-			telefone.setContato(null);
 		}
 	}
 	
