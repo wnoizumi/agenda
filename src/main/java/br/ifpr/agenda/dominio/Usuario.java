@@ -1,10 +1,14 @@
 package br.ifpr.agenda.dominio;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -24,6 +28,9 @@ public class Usuario {
 	
 	@Column(nullable =  false)
 	private String senha;
+
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "usuario")
+	private List<Contato> contatos;
 
 	public Long getId() {
 		return id;
@@ -57,5 +64,9 @@ public class Usuario {
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
 		this.senha = encoder.encode(senha);
+	}
+
+	public List<Contato> getContatos() {
+		return contatos;
 	}
 }
