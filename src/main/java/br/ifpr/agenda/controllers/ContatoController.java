@@ -15,15 +15,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import br.ifpr.agenda.dominio.Contato;
 import br.ifpr.agenda.dominio.Endereco;
 import br.ifpr.agenda.dominio.Telefone;
+import br.ifpr.agenda.dominio.Usuario;
 import br.ifpr.agenda.repositories.ContatoRepository;
 import br.ifpr.agenda.repositories.TipoTelefoneRepository;
+import br.ifpr.agenda.servicos.UsuarioService;
 
 @Controller
 public class ContatoController {
-
+	@Autowired
 	private ContatoRepository contatoRepository;
 	@Autowired
 	private TipoTelefoneRepository tipoTelefoneRepository;
+	@Autowired
+	private UsuarioService usuarioService;
 
 	public ContatoController(ContatoRepository contatoRepository) {
 		this.contatoRepository = contatoRepository;
@@ -31,8 +35,8 @@ public class ContatoController {
 	
 	@RequestMapping("/contatos")
 	public String getContatos(Model model) {
-		
-		model.addAttribute("contatos", contatoRepository.findAll());
+		Usuario usuarioLogado = this.usuarioService.getUsuarioLogado();
+		model.addAttribute("contatos", usuarioLogado.getContatos());
 		
 		return "contatos/index";
 	}
@@ -71,9 +75,11 @@ public class ContatoController {
 		if (bindingResult.hasErrors()) {
 			return "contatos/editar";
 		}
+
+		Usuario usuarioLogado = this.usuarioService.getUsuarioLogado();
 		
 		contato.corrigirEnderecosTelefones();
-		
+		contato.setUsuario(usuarioLogado);
 		contatoRepository.save(contato);
 		
 		return "redirect:/contatos";

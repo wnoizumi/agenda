@@ -11,6 +11,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -21,7 +23,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class Contato {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@NotBlank(message = "Nome obrigatório")
 	private String nome;
@@ -29,6 +31,9 @@ public class Contato {
 	private String email;
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private LocalDate dataNascimento;
+	@ManyToOne
+	@JoinColumn(name = "usuario_id")
+	private Usuario usuario;
 	
 	@OneToMany
 	(
@@ -137,6 +142,14 @@ public class Contato {
 	
 	public List<Telefone> getTelefones() {
 		return this.telefones;
+	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
 	@Override
