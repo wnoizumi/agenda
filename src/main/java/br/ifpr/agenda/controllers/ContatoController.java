@@ -73,6 +73,7 @@ public class ContatoController {
 	@PostMapping("/contatos/salvar")
 	public String salvarContato(@Valid Contato contato, BindingResult bindingResult, Model model) {
 		if (bindingResult.hasErrors()) {
+			model.addAttribute("tiposTelefone", tipoTelefoneRepository.findAll());
 			return "contatos/editar";
 		}
 
@@ -80,7 +81,13 @@ public class ContatoController {
 
 		contato.corrigirEnderecosTelefones();
 		contato.setUsuario(usuarioLogado);
-		contatoRepository.save(contato);
+
+		try {
+			contatoRepository.save(contato);
+		} catch (Exception e) {
+			model.addAttribute("tiposTelefone", tipoTelefoneRepository.findAll());
+			return "contatos/editar";
+		}
 		
 		return "redirect:/contatos";
 	}
