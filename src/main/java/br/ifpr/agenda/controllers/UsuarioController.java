@@ -28,7 +28,7 @@ public class UsuarioController {
 	@PostMapping("/usuarios/salvar")
 	public String salvarUsuario(@Valid Usuario usuario, BindingResult bindingResult, Model model) {
 		if (bindingResult.hasErrors()) {
-			return "usuarios/editar";
+			return "usuarios/cadastrar";
 		}
 		
 		if (usuario.checarCamposVazios()) {
