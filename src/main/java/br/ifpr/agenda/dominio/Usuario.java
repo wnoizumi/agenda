@@ -69,4 +69,13 @@ public class Usuario {
 	public List<Contato> getContatos() {
 		return contatos;
 	}
+
+	public boolean checarCamposVazios() {
+		if (this.nome.trim().length() == 0 ||
+				this.email.trim().length() == 0 ||
+				this.senha.trim().length() == 0) 	
+				return true;	
+
+		return false;
+	}
 }

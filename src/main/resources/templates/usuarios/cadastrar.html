@@ -39,16 +39,19 @@
 		<div class="card">
 			<div class="card-body">
 				<div class="col-md-15">
+					<div class="alert alert-danger" th:if="${mensagemErro}">
+						<div th:text="${mensagemErro}"></div>
+					</div>
+
 					<form action="#" th:action="@{/usuarios/salvar}"
 						th:object="${usuario}" method="POST" id="cadastrarUsuario">
 						<div class="row">
-							
 							<input type="hidden" id="id" th:field="*{id}">
 
 							<div class="form-group col-md-12">
 								<label for="nome" class="col-form-label">Nome</label> <input
 									type="text" th:field="*{nome}" class="form-control" id="nome"
-									placeholder="Nome"> <span
+									placeholder="Nome" required="required"> <span
 									th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"
 									class="text-danger"></span>
 							</div>
@@ -56,7 +59,7 @@
 							<div class="form-group col-md-12">
 								<label for="email" class="col-form-label">E-mail</label>
 								<input type="text" th:field="*{email}" class="form-control"
-									id="email" placeholder="E-mail"> <span
+									id="email" placeholder="E-mail"required="required"> <span
 									th:if="${#fields.hasErrors('email')}"
 									th:errors="*{email}" class="text-danger"></span>
 							</div>
@@ -64,7 +67,7 @@
 							<div class="form-group col-md-12">
 								<label for="senha" class="col-form-label">Senha</label> <input
 									type="password" th:field="*{senha}" class="form-control" id="senha"
-									placeholder="Senha"> <span
+									placeholder="Senha" required="required"> <span
 									th:if="${#fields.hasErrors('senha')}" th:errors="*{senha}"
 									class="text-danger"></span>
 							</div>

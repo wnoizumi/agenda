@@ -31,6 +31,12 @@ public class UsuarioController {
 			return "usuarios/editar";
 		}
 		
+		if (usuario.checarCamposVazios()) {
+			model.addAttribute("mensagemErro", "Todos os campos devem ser preenchidos!");
+			
+			return "usuarios/cadastrar";
+		}
+		
 		repository.save(usuario);
 
 		return "redirect:/login";
