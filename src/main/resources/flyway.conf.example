@@ -1,0 +1,5 @@
+flyway.user=root
+flyway.password=
+flyway.schemas=agenda
+flyway.url=jdbc:mysql://localhost:3306/agenda
+flyway.locations=filesystem:src/main/resources/db/migration

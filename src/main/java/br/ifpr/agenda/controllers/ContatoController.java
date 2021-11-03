@@ -3,6 +3,7 @@ package br.ifpr.agenda.controllers;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,21 +15,28 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import br.ifpr.agenda.dominio.Contato;
 import br.ifpr.agenda.dominio.Endereco;
 import br.ifpr.agenda.dominio.Telefone;
+import br.ifpr.agenda.dominio.Usuario;
 import br.ifpr.agenda.repositories.ContatoRepository;
+import br.ifpr.agenda.repositories.TipoTelefoneRepository;
+import br.ifpr.agenda.servicos.UsuarioService;
 
 @Controller
 public class ContatoController {
-
+	@Autowired
 	private ContatoRepository contatoRepository;
-	
+	@Autowired
+	private TipoTelefoneRepository tipoTelefoneRepository;
+	@Autowired
+	private UsuarioService usuarioService;
+
 	public ContatoController(ContatoRepository contatoRepository) {
 		this.contatoRepository = contatoRepository;
 	}
 	
 	@RequestMapping("/contatos")
 	public String getContatos(Model model) {
-		
-		model.addAttribute("contatos", contatoRepository.findAll());
+		Usuario usuarioLogado = this.usuarioService.getUsuarioLogado();
+		model.addAttribute("contatos", usuarioLogado.getContatos());
 		
 		return "contatos/index";
 	}
@@ -36,6 +44,7 @@ public class ContatoController {
 	@GetMapping("/contatos/novo")
 	public String novoContato(Model model) {
 		model.addAttribute("contato", new Contato(""));
+		model.addAttribute("tiposTelefone", tipoTelefoneRepository.findAll());
 		model.addAttribute("fieldToFocus", "nome");
 		return "contatos/editar";
 	}
@@ -46,6 +55,7 @@ public class ContatoController {
 											.orElseThrow(() -> new IllegalArgumentException("Contato inválido"));
 		
 		model.addAttribute("contato", contato);
+		model.addAttribute("tiposTelefone", tipoTelefoneRepository.findAll());
 		model.addAttribute("fieldToFocus", "nome");
 		return "contatos/editar";
 	}
@@ -63,12 +73,21 @@ public class ContatoController {
 	@PostMapping("/contatos/salvar")
 	public String salvarContato(@Valid Contato contato, BindingResult bindingResult, Model model) {
 		if (bindingResult.hasErrors()) {
+			model.addAttribute("tiposTelefone", tipoTelefoneRepository.findAll());
 			return "contatos/editar";
 		}
-		
+
+		Usuario usuarioLogado = this.usuarioService.getUsuarioLogado();
+
 		contato.corrigirEnderecosTelefones();
-		
-		contatoRepository.save(contato);
+		contato.setUsuario(usuarioLogado);
+
+		try {
+			contatoRepository.save(contato);
+		} catch (Exception e) {
+			model.addAttribute("tiposTelefone", tipoTelefoneRepository.findAll());
+			return "contatos/editar";
+		}
 		
 		return "redirect:/contatos";
 	}
@@ -77,15 +96,17 @@ public class ContatoController {
 	public String addEndereco(Contato contato, BindingResult bindingResult, Model model) {
 		contato.addEndereco(new Endereco());
 		String fieldId = "enderecos" + (contato.getEnderecos().size() - 1) + ".enderecoLinha1";
+		model.addAttribute("tiposTelefone", tipoTelefoneRepository.findAll());
 		model.addAttribute("fieldToFocus", fieldId);
 		return "contatos/editar";
 	}
 	
 	@RequestMapping(value="/contatos/salvar", params = {"removeEndereco"})
-	public String removeEndereco(Contato contato, BindingResult bindingResult, HttpServletRequest req) {
+	public String removeEndereco(Contato contato, BindingResult bindingResult, HttpServletRequest req, Model model) {
 		final Integer enderecoIndex = Integer.valueOf(req.getParameter("removeEndereco"));
 		
 		contato.removeEndereco(enderecoIndex.intValue());
+		model.addAttribute("tiposTelefone", tipoTelefoneRepository.findAll());
 		return "contatos/editar";
 	}
 	
@@ -94,16 +115,18 @@ public class ContatoController {
 		contato.addTelefone(new Telefone());
 		
 		String fieldId = "telefones" + (contato.getTelefones().size() - 1) + ".numero";
+		model.addAttribute("tiposTelefone", tipoTelefoneRepository.findAll());
 		model.addAttribute("fieldToFocus", fieldId);
 		
 		return "contatos/editar";
 	}
 	
 	@RequestMapping(value="/contatos/salvar", params = {"removeTelefone"})
-	public String removeTelefone(Contato contato, BindingResult bindingResult, HttpServletRequest req) {
+	public String removeTelefone(Contato contato, BindingResult bindingResult, HttpServletRequest req, Model model) {
 		final Integer telefoneIndex = Integer.valueOf(req.getParameter("removeTelefone"));
 		
 		contato.removeTelefone(telefoneIndex.intValue());
+		model.addAttribute("tiposTelefone", tipoTelefoneRepository.findAll());
 		return "contatos/editar";
 	}
 }

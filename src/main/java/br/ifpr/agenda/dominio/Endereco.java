@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import org.springframework.util.StringUtils;
@@ -14,15 +15,15 @@ import org.springframework.util.StringUtils;
 public class Endereco {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	private String enderecoLinha1;
-	private String enderecoLinha2;
+	private String descricao;
 	private String estado;
 	private String municipio;
 	
 	@ManyToOne
+	@JoinColumn(name = "contato_id")
 	private Contato contato;
 	
 	public Endereco() {}
@@ -35,20 +36,12 @@ public class Endereco {
 		this.id = id;
 	}
 
-	public String getEnderecoLinha1() {
-		return enderecoLinha1;
+	public String getDescricao() {
+		return descricao;
 	}
 
-	public void setEnderecoLinha1(String enderecoLinha1) {
-		this.enderecoLinha1 = enderecoLinha1;
-	}
-
-	public String getEnderecoLinha2() {
-		return enderecoLinha2;
-	}
-
-	public void setEnderecoLinha2(String enderecoLinha2) {
-		this.enderecoLinha2 = enderecoLinha2;
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
 	}
 
 	public String getEstado() {
@@ -77,13 +70,13 @@ public class Endereco {
 
 	@Override
 	public String toString() {
-		return "Endereco [enderecoLinha1=" + enderecoLinha1 + ", enderecoLinha2=" + enderecoLinha2 + ", estado="
+		return "Endereco [descricao=" + descricao + ", estado="
 				+ estado + ", municipio=" + municipio + "]";
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(enderecoLinha1, enderecoLinha2, estado, id, municipio);
+		return Objects.hash(descricao, estado, id, municipio);
 	}
 
 	@Override
@@ -95,15 +88,12 @@ public class Endereco {
 		if (getClass() != obj.getClass())
 			return false;
 		Endereco other = (Endereco) obj;
-		return Objects.equals(enderecoLinha1, other.enderecoLinha1)
-				&& Objects.equals(enderecoLinha2, other.enderecoLinha2) && Objects.equals(estado, other.estado)
+		return Objects.equals(descricao, other.descricao) && Objects.equals(estado, other.estado)
 				&& Objects.equals(id, other.id) && Objects.equals(municipio, other.municipio);
 	}
 
 	public boolean isVazio() {
-		return !StringUtils.hasText(enderecoLinha1)
-				&&
-				!StringUtils.hasText(enderecoLinha2)
+		return !StringUtils.hasText(descricao)
 				&&
 				!StringUtils.hasText(estado)
 				&&
