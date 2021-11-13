@@ -1,0 +1,8 @@
+CREATE TABLE endereco (
+  id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY
+  ,descricao VARCHAR(255) NOT NULL
+  ,estado VARCHAR(100)
+  ,municipio VARCHAR(150)
+  ,contato_id BIGINT UNSIGNED NOT NULL
+  ,FOREIGN KEY (contato_id) REFERENCES contato(id)
+);

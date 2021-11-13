@@ -8,24 +8,22 @@ import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OrderColumn;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 public class Contato {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@NotBlank(message = "Nome obrigatório")
 	private String nome;
@@ -33,6 +31,9 @@ public class Contato {
 	private String email;
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private LocalDate dataNascimento;
+	@ManyToOne
+	@JoinColumn(name = "usuario_id")
+	private Usuario usuario;
 	
 	@OneToMany
 	(
@@ -105,14 +106,13 @@ public class Contato {
 	
 	public void removeEndereco(Endereco endereco) {
 		this.enderecos.remove(endereco);
-		endereco.setContato(null);
 	}
 	
 	public void removeEndereco(int index) {
 		Endereco endereco = this.enderecos.get(index);
+
 		if (endereco != null) {
 			this.enderecos.remove(index);
-			endereco.setContato(null);
 		}
 	}
 	
@@ -128,19 +128,26 @@ public class Contato {
 	
 	public void removeTelefone(Telefone telefone) {
 		this.telefones.remove(telefone);
-		telefone.setContato(null);
 	}
 	
 	public void removeTelefone(int index) {
 		Telefone telefone = this.telefones.get(index);
+
 		if (telefone != null) {
 			this.telefones.remove(index);
-			telefone.setContato(null);
 		}
 	}
 	
 	public List<Telefone> getTelefones() {
 		return this.telefones;
+	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
 	@Override

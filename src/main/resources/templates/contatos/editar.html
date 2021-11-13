@@ -29,8 +29,13 @@
 
 <body>
 	<nav class="navbar navbar-dark bg-dark">
-		<a th:href="@{/contatos}" class="navbar-brand"><i
-			class="far fa-address-book"></i> Agenda</a>
+		<a th:href="@{/contatos}" class="navbar-brand">
+			<i class="far fa-address-book"></i> Agenda
+		</a>
+
+		<a th:href="@{/logout}" class="navbar-brand">
+			<i class="fas fa-sign-out-alt"></i>
+		</a>
 	</nav>
 	<div class="container my-5">
 		<h2>Editar Contato</h2>
@@ -106,13 +111,17 @@
 										<td><input type="text"
 											th:field="*{telefones[__${telefoneStat.index}__].numero}" />
 										</td>
-										<td><select
-											th:field="*{telefones[__${telefoneStat.index}__].tipo}">
-												<option
-													th:each="tipoOpc : ${T(br.ifpr.agenda.dominio.TipoTelefone).values()}"
-													th:value="${tipoOpc}" th:text="${tipoOpc.tipoStr}">
+										<td>
+											<select form="editarForm" 
+												id="tipo-id" 
+												name="tipo-id" 
+												th:field="*{telefones[__${telefoneStat.index}__].tipo}">
+												<option th:each="tipoTelefone : ${tiposTelefone}" 
+													th:value="${tipoTelefone.id}" 
+													th:text="${tipoTelefone.nome}">
 												</option>
-										</select></td>
+											</select>
+										</td>
 										<td>
 											<button type="submit" name="removeTelefone"
 												th:value="${telefoneStat.index}" class="btn btn-danger">
@@ -130,8 +139,7 @@
 								<thead class="thead-dark">
 									<tr>
 										<th scope="col">#</th>
-										<th scope="col">Linha 1</th>
-										<th scope="col">Linha 2</th>
+										<th scope="col">Descrição</th>
 										<th scope="col">Estado</th>
 										<th scope="col">Município</th>
 										<th scope="col"><button type="submit" name="addEndereco"
@@ -147,9 +155,7 @@
 											th:field="*{enderecos[__${enderecoStat.index}__].id}">
 										</th>
 										<td><input type="text"
-											th:field="*{enderecos[__${enderecoStat.index}__].enderecoLinha1}" /></td>
-										<td><input type="text"
-											th:field="*{enderecos[__${enderecoStat.index}__].enderecoLinha2}" /></td>
+											th:field="*{enderecos[__${enderecoStat.index}__].descricao}" /></td>
 										<td><input type="text"
 											th:field="*{enderecos[__${enderecoStat.index}__].estado}" /></td>
 										<td><input type="text"

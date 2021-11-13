@@ -2,15 +2,12 @@ package br.ifpr.agenda.dominio;
 
 import java.util.Objects;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.validation.constraints.NotBlank;
 
 import org.springframework.util.StringUtils;
 
@@ -18,16 +15,17 @@ import org.springframework.util.StringUtils;
 public class Telefone {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Enumerated(EnumType.ORDINAL)
-	@Column(nullable = false)
+	@ManyToOne
+	@JoinColumn(name = "tipo_telefone_id")
 	private TipoTelefone tipo;
 	
 	private String numero;
 	
 	@ManyToOne
+	@JoinColumn(name = "contato_id")
 	private Contato contato;
 	
 	public Telefone() {}
